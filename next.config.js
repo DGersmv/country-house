@@ -1,5 +1,3 @@
-const path = require('path');
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
@@ -20,14 +18,18 @@ const nextConfig = {
     minimumCacheTTL: 60,
   },
   
-
+  // Turbopack config for Next.js 16 builds
+  turbopack: {
+    resolveAlias: {
+      'pdfjs-dist/build/pdf.worker.entry': 'pdfjs-dist/build/pdf.worker.mjs',
+    },
+  },
 
   webpack: (config, { isServer }) => {
     // Настройка для pdfjs-dist
     config.resolve.alias = {
       ...config.resolve.alias,
       'pdfjs-dist/build/pdf.worker.entry': 'pdfjs-dist/build/pdf.worker.mjs',
-      three: path.resolve(__dirname, 'node_modules/three'),
     };
 
     // Исключение pdfjs-dist из серверного бандла
